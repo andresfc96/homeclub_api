@@ -1,0 +1,23 @@
+generator client {
+    provider      = "prisma-client-js"
+    output        = "../../node_modules/.prisma/client3"
+    binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL_DB3")
+}
+
+enum statusUser {
+    ACTIVE
+    INACTIVE
+}
+
+model user {
+    id       Int        @id @default(autoincrement())
+    username String     @unique
+    password String
+    token    String?
+    status   statusUser @default(ACTIVE)
+}
