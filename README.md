@@ -1,99 +1,131 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# HomeClub API - Sistema de Gestión de Apartamentos
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descripción
+HomeClub API es un sistema backend desarrollado con NestJS que gestiona la reserva y administración de apartamentos. El sistema maneja diferentes tipos de apartamentos (Corporativos y Turísticos), reservas, pagos y usuarios.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Características Principales
 
-## Description
+### 1. Gestión de Apartamentos
+- Registro de apartamentos con información detallada (nombre, dirección, tipo, ubicación)
+- Soporte para dos tipos de apartamentos: Corporativos y Turísticos
+- Sistema de geolocalización (latitud/longitud)
+- Gestión de estados (activo/inactivo)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 2. Sistema de Tarifas
+- Tarifas corporativas (tarifas mensuales)
+- Tarifas turísticas (tarifas diarias)
+- Asignación de tarifas específicas por tipo de apartamento
 
-## Project setup
+### 3. Gestión de Reservas
+- Sistema de reservas con códigos únicos
+- Validación de disponibilidad de fechas
+- Asignación de tarifas según el tipo de apartamento
+- Estados de reserva (Activo/Cancelado)
 
+### 4. Sistema de Pagos
+- Registro de transacciones con montos y fechas
+
+### 5. Gestión de Clientes
+- Registro de clientes con información personal
+- Sistema de correo electrónico único
+
+### 6. Autenticación y Usuarios
+- Sistema de autenticación JWT
+- Gestión de usuarios con diferentes estados
+- Protección de rutas
+
+## Arquitectura Técnica
+
+### Tecnologías Principales
+- NestJS como framework principal
+- Prisma como ORM
+- MySQL como base de datos
+- Fastify como servidor web
+
+### Estructura de Base de Datos
+- Múltiples bases de datos (DB1, DB2, DB3) para separación de responsabilidades
+- DB1: Datos principales (apartamentos, reservas, pagos)
+- DB2: Información adicional de propiedades
+- DB3: Gestión de usuarios y autenticación
+
+### Características Técnicas
+- API RESTful con prefijo `/api/v1`
+- CORS configurado
+- Logging con Morgan
+- Validación de datos con class-validator
+- Manejo de errores centralizado
+
+## Endpoints Principales
+
+### Apartamentos
+- Creación de apartamentos
+- Búsqueda de apartamentos cercanos
+- Gestión de información de propiedades
+
+### Reservas
+- Creación de reservas
+
+### Pagos
+- Registro de pagos
+
+### Clientes
+- Registro de clientes
+- Gestión de información personal
+
+## Seguridad
+- Autenticación JWT
+- Protección de rutas
+- Validación de datos
+- Manejo de errores
+- CORS configurado
+
+## Características Adicionales
+- Búsqueda de apartamentos por proximidad
+- Sistema de tarifas dinámico
+- Validación de fechas y disponibilidad
+- Generación de códigos únicos para reservas
+- Gestión de estados de apartamentos y reservas
+
+## Instalación
+
+1. Clonar el repositorio
 ```bash
-$ npm install
+git clone https://github.com/andresfc96/homeclub_api.git
 ```
 
-## Compile and run the project
-
+2. Instalar dependencias
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
-
+3. Configurar variables de entorno
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Crear archivo .env con las siguientes variables
+DATABASE_URL_DB1=mysql://user:password@localhost:3306/db1
+DATABASE_URL_DB2=mysql://user:password@localhost:3306/db2
+DATABASE_URL_DB3=mysql://user:password@localhost:3306/db3
+JWT_SECRET=your-secret-key
+JWT_EXPIRATION_TIME=1h
+PORT=3000
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+4. Ejecutar migraciones de Prisma
 ```bash
-$ npm install -g mau
-$ mau deploy
+npx prisma migrate dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+5. Iniciar la aplicación
+```bash
+npm run start:dev
+```
 
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## Características de la Prueba Técnica
+Esta aplicación demuestra un buen manejo de:
+- Arquitectura modular
+- Separación de responsabilidades
+- Validación de datos
+- Manejo de errores
+- Relaciones entre entidades
+- Tipos de datos y enums
+- Autenticación y autorización
+- Documentación de API
