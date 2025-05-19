@@ -12,6 +12,14 @@ export class ClientsService {
     async createClient(createClientDto: CreateClientDto): Promise<CreateClientResponse> {
         try {
 
+            const existingClient = await this.prismaDb1Service.client.findUnique({
+                where: { email: createClientDto.email }
+            });
+
+            if (existingClient) {
+                throw new ConflictException('Email already registered');
+            }
+
             const newClient = await this.prismaDb1Service.client.create({
                 data: {
                     firstName: createClientDto.firstName,
